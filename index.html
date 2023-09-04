@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Promise Async Await</title>
+</head>
+<body>
+    <pre>
+        Q1 Write one example explaining how you can write a callback function.
+        function  add(a,b,sum){
+            return sum(a,b)+a+b
+            }
+        
+        function add2(a,b){
+            return a+b
+            }
+        
+        console.log(add(2,3,add2))
+        
+        Output:
+            10
+        Explanation:
+
+        To write a callback function we should pass function name as argument without () brackets and call it inside another function 
+
+        Q2
+        
+        Write a callback function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+        Explain callback hell.
+        Numbers
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+
+        function printNumber(callback){
+
+        let number=1
+        function print(){
+            console.log(number)
+            number++
+            if(number&lt;=7){
+            setTimeout(print,number*1000)
+            }
+            else
+                {
+                callback()
+                }
+            }
+             print()
+
+            } 
+
+            printNumber(()=>{console.log('Program executed')
+
+            })
+
+        Q3 Write the promise function to print numbers from 1 to 7, in which 1 should be printed after 1 sec, 2 should be printed after 2 sec, 3 should be printed after 3 sec, and so on. 
+
+        Numbers
+        1
+        2
+        3
+        4
+        5
+        6
+        7
+
+            function delay(t){
+                return new Promise (res=>setTimeout(res,t))
+            }
+
+            function print(){
+                let promise=Promise.resolved()
+
+                for(let n=1;n&lt;=7;n++){
+                    promise=promise.then(()=>{
+                        console.log(n)
+                        
+                    }).then(()=>delay(n*1000))
+
+                }
+                return promise
+            }
+
+            print().then(()=>{console.log('thanks')})
+
+
+        Q4 Create a promise function accepting an argument, if yes is passed to the function then it should go to resolved state and print Promise Resolved, and if nothing is passed 
+            then it should go to reject the state and catch the error and print Promise Rejected "
+
+            function doubleNum(num){
+
+                return new Promise((resolve,reject)=>{
+            
+                    if (num=="yes") resolve('Promise Resolved')
+                    else reject('Promise Rejected')
+            
+                })
+            
+            }
+            
+            doubleNum('yes').then((result)=>{
+                console.log(result)
+            },(result)=>{
+                console.log(result)
+            })
+            
+            doubleNum('no').then((result)=>{
+                console.log(result)
+            },(result)=>{
+                console.log(result)
+            })
+        Q5 Create examples to explain callback function
+            function test(function_as_argument){
+                function_as_argument()
+                console.log("executed after callback function is executedf ")
+            }
+            
+            function callback(){
+                console.log("callback function executed ")
+            } 
+            
+            test(callback)
+
+            Output:
+            callback function executed 
+            executed after callback function is executed
+
+            when a function is passed as a argument as a parameter is called callback function .It can useful
+            to make other functions depends on these and also on oncassions if the functions are easily not accessible 
+
+
+        
+
+        Q7 Create examples to explain promises function
+            downloaded=false
+            let downloader= new Promise(function(resolve ,reject){
+                if(downloaded) resolve('File Downloaded Succesfully')
+                else reject("Download Failed")
+            })
+
+            downloader.then((result)=>{
+                console.log(result)
+            },(result)=>{
+                console.log(result)
+            })
+
+            Output:
+            Download Failed
+
+            A promise function is created by the keyword new Promise and a function
+            with 2 parameters in which the 1st one connects the .then method 1st parameter 
+            and the second parameter connects the either .then method second variable or .catch method
+            Also there are 3 states in Promise i.e Pending ,Resolve and Reject
+
+        Q8 Create examples to explain async await function
+                function resolveAfter2Seconds() {
+                    return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve('resolved');
+                    }, 2000);
+                    });
+                }
+                
+                async function asyncCall() {
+                    console.log('calling');
+                    const result = await resolveAfter2Seconds();
+                    console.log(result);
+                
+                }
+                
+                asyncCall();
+
+            Output:
+            calling
+            resolved   
+            
+            The async function declaration creates a binding of a new async function
+            to a given name. The await keyword is waits for  the function body,
+            enabling asynchronous, promise-based behavior to be written in a cleaner style
+            and avoiding the need to explicitly configure promise chains.
+
+
+        Q9 Create examples to explain promise.all function
+            let first_promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("Resolved First after 1 second");
+                }, 1000);
+            });
+             
+            let second_promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("Resolved First after 2 seconds");
+                }, 2000);
+            });
+             
+            let third_promise = new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("Resolved First after 3 seconds");
+                }, 3000);
+            });
+
+
+            let result = Promise.all([first_promise, second_promise, third_promise]);
+            result.then((data) => console.log(data));            
+            
+            Output:
+                    [
+                    'Resolved First after 1 second',
+                    'Resolved First after 2 seconds',
+                    'Resolved First after 3 seconds'
+                    ]
+            in Promise.all all promise function are invoked at the same time and all the results is retreived
+            in .then function and the results are iterable  
+    </pre>
+    
+</body>
+</html>
